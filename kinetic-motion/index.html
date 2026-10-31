@@ -7,338 +7,123 @@
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      background-color: #000000;
-      color: #ffffff;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
-    /* Fullscreen 3D Viewport */
-    .viewport-3d {
-      perspective: 1200px;
-      perspective-origin: 50% 50%;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #000000;
-      position: relative;
-    }
-
-    /* Balanced Previous Design Artboard */
-    .poster-container {
-      transform-style: preserve-3d;
-      position: relative;
-      width: min(88vw, 88vh);
-      height: min(88vw, 88vh);
-      max-width: 580px;
-      max-height: 580px;
-      background-color: #000000;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      padding: 5% 4%;
-    }
-
-    .column-track {
-      transform-style: preserve-3d;
-      position: relative;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* Fast, snappy 3D twisting drum */
-    .drum {
-      transform-style: preserve-3d;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.42s cubic-bezier(0.2, 0.9, 0.25, 1);
-    }
-
-    .face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .face-front {
-      transform: rotateX(0deg) translateZ(46px);
-    }
-
-    .face-back {
-      transform: rotateX(180deg) translateZ(46px);
-    }
-
-    /* 3D Bevel Highlights */
-    .face-top-rim {
-      position: absolute;
-      width: 100%;
-      height: 92px;
-      top: -46px;
-      left: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.02) 100%);
-      transform: rotateX(90deg) translateZ(0px);
-      backface-visibility: hidden;
-      pointer-events: none;
-    }
-
-    .face-bottom-rim {
-      position: absolute;
-      width: 100%;
-      height: 92px;
-      bottom: -46px;
-      left: 0;
-      background: linear-gradient(0deg, rgba(255,255,255,0.2) 0%, rgba(0,0,0,0.95) 100%);
-      transform: rotateX(-90deg) translateZ(0px);
-      backface-visibility: hidden;
-      pointer-events: none;
-    }
-
-    /* Proportional Letters from Previous Clean Design */
-    .letter-glyph {
-      font-family: 'Space Grotesk', -apple-system, sans-serif;
-      font-weight: 800;
-      line-height: 0.85;
-      letter-spacing: -0.04em;
-      text-transform: uppercase;
-      font-size: clamp(2.8rem, 10vw, 5.8rem);
-      color: #ffffff;
-      text-shadow: 0 4px 18px rgba(255, 255, 255, 0.22);
-    }
-
-    /* Distinct White Square Dots / Ticks representing Kolorado & Karl Anders sections */
-    .kolorado-dot {
-      width: clamp(10px, 1.8vw, 15px);
-      height: clamp(10px, 1.8vw, 15px);
-      background-color: #ffffff;
-      display: block;
-      box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
-    }
-
-    /* CRT scanlines and subtle spotlight */
-    .raster-overlay {
-      background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.28) 0px,
-        rgba(0, 0, 0, 0.28) 1px,
-        transparent 1px,
-        transparent 3px
-      );
-      pointer-events: none;
-    }
-
-    .spotlight {
-      background: radial-gradient(
-        ellipse 95% 75% at 50% 25%,
-        rgba(255, 255, 255, 0.12) 0%,
-        rgba(255, 255, 255, 0.03) 45%,
-        rgba(0, 0, 0, 0.98) 85%
-      );
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; background: #000; color: #fff; overflow: hidden; display: flex; align-items: center; justify-content: center; font-family: 'Inter', sans-serif; user-select: none; -webkit-user-select: none; }
+    .viewport-3d { perspective: 1200px; perspective-origin: 50% 50%; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: #000; position: relative; }
+    .poster-container { transform-style: preserve-3d; position: relative; width: min(88vw, 88vh); height: min(88vw, 88vh); max-width: 580px; max-height: 580px; background: #000; display: flex; flex-direction: column; justify-content: space-between; padding: 5% 4%; }
+    .column-track { transform-style: preserve-3d; position: relative; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .drum { transform-style: preserve-3d; position: absolute; width: 100%; height: 100%; transition: transform .82s cubic-bezier(.22,.78,.18,1); will-change: transform, filter; }
+    .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
+    .face-front { transform: rotateX(0deg) translateZ(46px); }
+    .face-back { transform: rotateX(180deg) translateZ(46px); }
+    .face-top-rim { position: absolute; width: 100%; height: 92px; top: -46px; left: 0; background: linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,.02)); transform: rotateX(90deg); backface-visibility: hidden; pointer-events: none; }
+    .face-bottom-rim { position: absolute; width: 100%; height: 92px; bottom: -46px; left: 0; background: linear-gradient(0deg,rgba(255,255,255,.2),rgba(0,0,0,.95)); transform: rotateX(-90deg); backface-visibility: hidden; pointer-events: none; }
+    .letter-glyph { font-family: 'Space Grotesk',sans-serif; font-weight: 800; line-height: .85; letter-spacing: -.04em; text-transform: uppercase; font-size: clamp(2.8rem,10vw,5.8rem); color: #fff; text-shadow: 0 4px 18px rgba(255,255,255,.22); }
+    .kolorado-dot { width: clamp(10px,1.8vw,15px); height: clamp(10px,1.8vw,15px); background: #fff; display: block; box-shadow: 0 0 6px rgba(255,255,255,.4); }
+    .raster-overlay { background: repeating-linear-gradient(0deg,rgba(0,0,0,.28) 0px,rgba(0,0,0,.28) 1px,transparent 1px,transparent 3px); pointer-events: none; }
+    .spotlight { background: radial-gradient(ellipse 95% 75% at 50% 25%,rgba(255,255,255,.12) 0%,rgba(255,255,255,.03) 45%,rgba(0,0,0,.98) 85%); }
+    @media (prefers-reduced-motion: reduce) { .drum { transition-duration: .01ms !important; } }
   </style>
 </head>
 <body class="bg-black text-white w-screen h-screen overflow-hidden">
-
   <main class="viewport-3d">
-    
-    <!-- Clean Black Screen Artboard with Kolorado Talk section and prominent framing dots -->
     <div id="poster-wrapper" class="poster-container">
-      
-      <!-- Ambient Lighting & Scanline Texture -->
       <div class="absolute inset-0 spotlight pointer-events-none"></div>
       <div class="absolute inset-0 raster-overlay pointer-events-none"></div>
-
-      <!-- Center Kinetic Typography Block -->
       <div class="relative z-10 w-full h-full flex flex-col justify-between my-auto py-2">
-        
-        <!-- 6-Column 3D Cylindrical Rolling Drums -->
-        <div id="kinetic-drums" class="grid grid-cols-6 gap-0 sm:gap-1 text-center items-center justify-center w-full h-full">
-          <!-- Populated by JavaScript -->
-        </div>
-
-        <!-- Middle Stationary Row: Kolorado Talk Section, Centered IN, and Karl Anders Section -->
+        <div id="kinetic-drums" class="grid grid-cols-6 gap-0 sm:gap-1 text-center items-center justify-center w-full h-full"></div>
         <div class="absolute inset-y-0 inset-x-0 flex items-center justify-between pointer-events-none px-1">
-          
-          <!-- LEFT: Kolorado Talk Section with Top and Bottom Framing Dots -->
           <div class="text-left font-sans flex flex-col justify-between h-[clamp(75px,13vw,100px)] select-none">
-            <!-- Top Square Dot -->
             <span class="kolorado-dot"></span>
-            
-            <!-- Kolorado Talk Info -->
             <div class="space-y-0.5 my-auto pl-0.5">
               <p class="font-bold text-white text-[9px] sm:text-[11px] md:text-[12px] tracking-tight">Kolorado Talk #1</p>
               <p class="text-white/80 text-[8.5px] sm:text-[10px] md:text-[11px]">26. Januar 2023</p>
               <p class="text-white/70 text-[8px] sm:text-[9.5px] md:text-[10.5px]">19:00 Uhr</p>
             </div>
-            
-            <!-- Bottom Square Dot -->
             <span class="kolorado-dot"></span>
           </div>
-
-          <!-- CENTER: Stationary Word IN -->
-          <div class="text-center font-black tracking-widest text-white text-3xl sm:text-5xl font-mono drop-shadow-[0_0_14px_rgba(255,255,255,0.4)] px-3 my-auto">
-            IN
-          </div>
-
-          <!-- RIGHT: Host Section with Top and Bottom Framing Dots -->
+          <div class="text-center font-black tracking-widest text-white text-3xl sm:text-5xl font-mono drop-shadow-[0_0_14px_rgba(255,255,255,0.4)] px-3 my-auto">IN</div>
           <div class="text-right font-sans flex flex-col justify-between items-end h-[clamp(75px,13vw,100px)] select-none">
-            <!-- Top Square Dot -->
             <span class="kolorado-dot"></span>
-            
-            <!-- Host Info -->
             <div class="space-y-0.5 my-auto pr-0.5">
               <p class="font-bold text-white text-[9px] sm:text-[11px] md:text-[12px] tracking-tight">Hosted by Karl Anders</p>
               <p class="text-white/80 text-[8.5px] sm:text-[10px] md:text-[11px]">Holstenplatz 20</p>
               <p class="text-white/70 text-[8px] sm:text-[9.5px] md:text-[10.5px]">22765 Hamburg</p>
             </div>
-            
-            <!-- Bottom Square Dot -->
             <span class="kolorado-dot"></span>
           </div>
-
         </div>
-
       </div>
-
     </div>
-
   </main>
-
   <script>
     const word1 = "ENERGY";
     const word2 = "MOTION";
     let currentRotation = 0;
     let drums = [];
-    const drumsGrid = document.getElementById('kinetic-drums');
+    let sequenceTimers = [];
+    const drumsGrid = document.getElementById("kinetic-drums");
 
-    // Build the 6-column 3D Drum Typography
     function initDrums() {
-      drumsGrid.innerHTML = '';
-      drumsGrid.style.gridTemplateColumns = `repeat(6, minmax(0, 1fr))`;
+      drumsGrid.innerHTML = "";
+      drumsGrid.style.gridTemplateColumns = "repeat(6,minmax(0,1fr))";
       drums = [];
-
       for (let i = 0; i < 6; i++) {
-        const w1Char = word1[i];
-        const w2Char = word2[i];
-
-        const track = document.createElement('div');
-        track.className = 'column-track h-48 sm:h-64 lg:h-72 flex items-center justify-center';
-
-        const drum = document.createElement('div');
-        drum.className = 'drum';
-        drum.id = `drum-column-${i}`;
-        drum.style.transform = `rotateX(0deg)`;
-
-        // Face Front: Top = ENERGY char, Bottom = MOTION char
-        const faceA = document.createElement('div');
-        faceA.className = 'face face-front';
-        faceA.innerHTML = `
-          <div class="letter-glyph pt-1">${w1Char}</div>
-          <div class="letter-glyph pb-1">${w2Char}</div>
-        `;
-
-        // Face Back: Top = MOTION char, Bottom = ENERGY char
-        const faceB = document.createElement('div');
-        faceB.className = 'face face-back';
-        faceB.innerHTML = `
-          <div class="letter-glyph pt-1">${w2Char}</div>
-          <div class="letter-glyph pb-1">${w1Char}</div>
-        `;
-
-        // 3D Rim Highlights
-        const topRim = document.createElement('div');
-        topRim.className = 'face-top-rim';
-        const botRim = document.createElement('div');
-        botRim.className = 'face-bottom-rim';
-
-        drum.appendChild(faceA);
-        drum.appendChild(faceB);
-        drum.appendChild(topRim);
-        drum.appendChild(botRim);
+        const track = document.createElement("div");
+        track.className = "column-track h-48 sm:h-64 lg:h-72 flex items-center justify-center";
+        const drum = document.createElement("div");
+        drum.className = "drum";
+        drum.style.transform = "rotateX(0deg)";
+        const front = document.createElement("div");
+        front.className = "face face-front";
+        front.innerHTML = `<div class="letter-glyph pt-1">${word1[i]}</div><div class="letter-glyph pb-1">${word2[i]}</div>`;
+        const back = document.createElement("div");
+        back.className = "face face-back";
+        back.innerHTML = `<div class="letter-glyph pt-1">${word2[i]}</div><div class="letter-glyph pb-1">${word1[i]}</div>`;
+        const topRim = document.createElement("div");
+        topRim.className = "face-top-rim";
+        const bottomRim = document.createElement("div");
+        bottomRim.className = "face-bottom-rim";
+        drum.append(front, back, topRim, bottomRim);
         track.appendChild(drum);
         drumsGrid.appendChild(track);
         drums.push(drum);
       }
     }
 
-    /**
-     * Fast cascading twist
-     * @param {number} circulations Number of full 360° loops
-     * @param {number} speedSec Rotation speed in seconds
-     * @param {number} staggerMs Cascade delay in ms
-     */
-    function executeTwist(circulations, speedSec, staggerMs) {
-      const addedDeg = circulations * 360;
-      currentRotation += addedDeg;
-
-      drums.forEach((drum, idx) => {
-        setTimeout(() => {
-          drum.style.transition = `transform ${speedSec}s cubic-bezier(0.2, 0.9, 0.25, 1)`;
+    // A 180-degree half-turn changes the visible word; each column follows in sequence.
+    function executeTwist(duration = .82, staggerMs = 72) {
+      currentRotation += 180;
+      drums.forEach((drum, index) => {
+        window.setTimeout(() => {
+          drum.style.transition = `transform ${duration}s cubic-bezier(.22,.78,.18,1)`;
+          drum.style.filter = "blur(1.1px)";
           drum.style.transform = `rotateX(${currentRotation}deg)`;
-        }, idx * staggerMs);
+          window.setTimeout(() => { drum.style.filter = "none"; }, duration * 1000);
+        }, index * staggerMs);
       });
     }
 
-    // Sequence Choreography:
-    // 1. Initial pause
-    // 2. First twist: 1 time circulate (360°) with high speed (0.42s, 36ms stagger)
-    // 3. Pause for 1.8s
-    // 4. Second twist: 2 times circulate (720°) with high speed (0.62s, 36ms stagger)
-    // 5. Hold for 2.4s, then smoothly loop
-    function startSequence() {
-      setTimeout(() => {
-        executeTwist(1, 0.42, 36);
-
-        setTimeout(() => {
-          executeTwist(2, 0.62, 36);
-
-          setTimeout(() => {
-            startSequence();
-          }, 2400);
-
-        }, 1800);
-
-      }, 1200);
+    function clearSequence() {
+      sequenceTimers.forEach(window.clearTimeout);
+      sequenceTimers = [];
     }
 
-    // Manual click trigger: alternate between 1-circulation and 2-circulations
-    let clickToggle = false;
-    document.getElementById('poster-wrapper').addEventListener('click', () => {
-      clickToggle = !clickToggle;
-      if (clickToggle) {
-        executeTwist(1, 0.38, 30);
-      } else {
-        executeTwist(2, 0.58, 30);
-      }
+    function scheduleSequence() {
+      clearSequence();
+      sequenceTimers.push(window.setTimeout(() => executeTwist(.82,72), 1450));
+      sequenceTimers.push(window.setTimeout(() => executeTwist(.82,72), 4700));
+      sequenceTimers.push(window.setTimeout(scheduleSequence, 9000));
+    }
+
+    document.getElementById("poster-wrapper").addEventListener("click", () => {
+      clearSequence();
+      executeTwist(.72,48);
+      sequenceTimers.push(window.setTimeout(scheduleSequence,6500));
     });
 
-    // Initialize and run
     initDrums();
-    startSequence();
+    scheduleSequence();
   </script>
 </body>
 </html>
