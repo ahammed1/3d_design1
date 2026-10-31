@@ -12,11 +12,12 @@
     .viewport-3d { perspective: 1200px; perspective-origin: 50% 50%; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; background: #000; position: relative; }
     .poster-container { transform-style: preserve-3d; position: relative; width: min(88vw, 88vh); height: min(88vw, 88vh); max-width: 580px; max-height: 580px; background: #000; display: flex; flex-direction: column; justify-content: space-between; padding: 5% 4%; }
     .column-track { transform-style: preserve-3d; position: relative; height: 100%; display: flex; align-items: center; justify-content: center; }
-    .drum { transform-style: preserve-3d; position: absolute; width: 100%; height: 100%; transition: transform .82s cubic-bezier(.22,.78,.18,1); will-change: transform, filter; }
-    .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
+    .drum { transform-style: preserve-3d; position: absolute; width: 100%; height: 100%; transition: transform 1.15s cubic-bezier(.2,.72,.18,1); will-change: transform; }
+    .face { position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
     .face-front { transform: rotateX(0deg) translateZ(46px); }
     .face-back { transform: rotateX(180deg) translateZ(46px); }
-    /* Counter-rotate the back-face content so letters stay upright and readable. */
+    .face-side-a { transform: rotateX(90deg) translateZ(46px); }
+    .face-side-b { transform: rotateX(-90deg) translateZ(46px); }
     .face-back .letter-glyph { transform: rotateX(180deg); }
     .face-top-rim { position: absolute; width: 100%; height: 92px; top: -46px; left: 0; background: linear-gradient(180deg,rgba(255,255,255,.45),rgba(255,255,255,.02)); transform: rotateX(90deg); backface-visibility: hidden; pointer-events: none; }
     .face-bottom-rim { position: absolute; width: 100%; height: 92px; bottom: -46px; left: 0; background: linear-gradient(0deg,rgba(255,255,255,.2),rgba(0,0,0,.95)); transform: rotateX(-90deg); backface-visibility: hidden; pointer-events: none; }
@@ -82,19 +83,25 @@
         const back = document.createElement("div");
         back.className = "face face-back";
         back.innerHTML = `<div class="letter-glyph pt-1">${word2[i]}</div><div class="letter-glyph pb-1">${word1[i]}</div>`;
+        const sideA = document.createElement("div");
+        sideA.className = "face face-side-a";
+        sideA.innerHTML = `<div class="letter-glyph pt-1">${word1[i]}</div><div class="letter-glyph pb-1">${word2[i]}</div>`;
+        const sideB = document.createElement("div");
+        sideB.className = "face face-side-b";
+        sideB.innerHTML = `<div class="letter-glyph pt-1">${word2[i]}</div><div class="letter-glyph pb-1">${word1[i]}</div>`;
         const topRim = document.createElement("div");
         topRim.className = "face-top-rim";
         const bottomRim = document.createElement("div");
         bottomRim.className = "face-bottom-rim";
-        drum.append(front, back, topRim, bottomRim);
+        drum.append(front, sideA, back, sideB, topRim, bottomRim);
         track.appendChild(drum);
         drumsGrid.appendChild(track);
         drums.push(drum);
       }
     }
 
-    // A 180-degree half-turn changes the visible word; each column follows in sequence.
-    function executeTwist(duration = .82, staggerMs = 72) {
+    // Rotate the four-sided drum as a 3D cylinder; each panel carries readable lettering.
+    function executeTwist(duration = 1.15, staggerMs = 72) {
       currentRotation += 180;
       drums.forEach((drum, index) => {
         window.setTimeout(() => {
@@ -113,14 +120,14 @@
 
     function scheduleSequence() {
       clearSequence();
-      sequenceTimers.push(window.setTimeout(() => executeTwist(.82,72), 1450));
-      sequenceTimers.push(window.setTimeout(() => executeTwist(.82,72), 4700));
+      sequenceTimers.push(window.setTimeout(() => executeTwist(1.15,72), 1450));
+      sequenceTimers.push(window.setTimeout(() => executeTwist(1.15,72), 4700));
       sequenceTimers.push(window.setTimeout(scheduleSequence, 9000));
     }
 
     document.getElementById("poster-wrapper").addEventListener("click", () => {
       clearSequence();
-      executeTwist(.72,48);
+      executeTwist(1.05,48);
       sequenceTimers.push(window.setTimeout(scheduleSequence,6500));
     });
 
